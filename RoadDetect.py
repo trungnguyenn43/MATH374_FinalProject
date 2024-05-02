@@ -3,25 +3,13 @@ import numpy as np
 import matplotlib.pyplot as plt
 import cv2 as cv
 
-
-def RoadDetect(originalImg, level = 0.5):
-    img1R, img1G, img1B, img1Gray = ChannelSplit(originalImg)
-
-    finalOutput = originalImg * 0
-    confidenceLevel = 0
-
-    while(confidenceLevel > level):
-        img1R = img1R - CalMean(img1R)
-        img1G = img1G - CalMean(img1G)
-        img1B = img1B - CalMean(img1B)
-        img1Gray = img1Gray - CalMean(img1Gray)
-        confidenceLevel = confidenceLevel + 0.01
-
-        road = 0
-
-        
-    return finalOutput
-
+def ToUint8(target):
+    maxVal=np.max(target)
+    minVal=np.min(target)
+    rng=maxVal-minVal   
+    newImg= 255*(target-minVal)/rng    # rescales to 0 to 255,  but still a floating point # between 0 and 255
+    newImg=np.uint8(newImg);     # Converts the float to uint8 
+    return newImg
 
 def ChannelSplit(img):
 
@@ -45,17 +33,7 @@ def CalMean(img):
     mean = np.mean(img)
     return mean
 
-def ToUint8(target):
-    maxVal=np.max(target)
-    minVal=np.min(target)
-    rng=maxVal-minVal   
-    newImg= 255*(target-minVal)/rng    # rescales to 0 to 255,  but still a floating point # between 0 and 255
-    newImg=np.uint8(newImg);     # Converts the float to uint8 
-    return newImg
-    
-def RoadTest(imgR, imgB, imgG):
-    
-    print()
+
     
 def meanFilter(myImg,boxRadius=1):
     imgDim=myImg.shape   # get image dimensions 
